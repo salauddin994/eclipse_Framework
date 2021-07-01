@@ -26,7 +26,7 @@ public class SignUp_Steps extends Config {
 	public void hover_over_sign_in_button_and_click_on_creat_an_account_link() {
 		
 	    Utillity.mouseHoverOver(signup.Signin, signup.createAccount);
-	    System.out.println( driver.getTitle());
+
 	}
 
 //	@Given("^I fillout the form using following ([^\"]*) ([^\"]*) ([^\"]*) ([^\"]*) ([^\"]*) ([^\"]*) ([^\"]*) $")
@@ -35,7 +35,9 @@ public class SignUp_Steps extends Config {
 //	}
 	
 	@Given("I fillout the form using Valid information")
-	public void i_fillout_the_form_using_valid_information() {
+	public void i_fillout_the_form_using_valid_information() throws InterruptedException {
+		Thread.sleep(3000);
+		Assert.assertEquals(driver.getTitle(), TestData.expTitle_LoginPage);
 		TestData.global_FirstName=faker.name().firstName();
 		signup.setFirstName.sendKeys(TestData.global_FirstName);
 		signup.setLastName.sendKeys(faker.name().lastName());
@@ -62,10 +64,11 @@ public class SignUp_Steps extends Config {
 	@Given("Click on Create Account button")
 	public void click_on_create_account_button() {
 	   signup.clickCreatAccountBtn.click();
-	   driver.getTitle();
+	   
 	  String welcomeMsg= signup.WelcomeValidation.getText();
 	  String expMsg =signup.onlyWelcomeText.getText()+" "+TestData.global_FirstName;
 	  Assert.assertEquals(welcomeMsg,expMsg );
+	  Assert.assertEquals(driver.getTitle(), TestData.after_Signup_Title);
 	   
 	}
 
